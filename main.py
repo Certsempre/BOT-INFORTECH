@@ -1,14 +1,18 @@
+import sys
 import pandas as pd
 from Login import Login
 from navegacao import *
-import time
+from Formatacao import Formatacao
 from selenium import webdriver
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By 
 from selenium.webdriver.chrome.options import Options
+
+# Pegando os argumentos da interface
+caminho_planilha = sys.argv[1]
+pagina_planilha = sys.argv[2]
+quantidade_notas = int(sys.argv[3])
+
 chrome_options = Options()
-chrome_options.add_argument("--headless")
+#chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-gpu")
 chrome_options.add_argument("--window-size=1920x1080")
 browser = webdriver.Chrome(options=chrome_options)
@@ -19,9 +23,7 @@ login = Login()
 cnpj = str(login.get_cnpj())
 senha = str(login.get_senha())
 
-lerPlanilha = pd.read_excel(Formatacao().get_caminhoNotas(), Formatacao().get_sheetnameNotas())
-
-quantidade_notas = 38
+lerPlanilha = pd.read_excel(caminho_planilha, pagina_planilha)
 
 browser.get('https://patospb.webiss.com.br/')
 
@@ -36,8 +38,3 @@ for indice in range(min(quantidade_notas, len(lerPlanilha))):
     salvar_rascunho(browser)
     emitir(browser)
     cliente_emitido(lerPlanilha, indice)
-
-
-
-
-
