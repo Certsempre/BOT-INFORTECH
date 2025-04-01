@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
 from Login import Login
 import time
 from Formatacao import Formatacao
@@ -67,32 +68,48 @@ def colocar_cnpj(browser, lerPlanilha, indice):
 def colocar_razao_social(browser, lerPlanilha, indice):
     espere = WebDriverWait(browser, 30)
     nome_razao_social = espere.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="tomador-razao-social"]')), 'Elemento [razao social] Não ficou visível')
+
+    valor_atual = nome_razao_social.get_attribute("value")
+    if valor_atual.strip():  # Se já tiver um valor, não altera nada e retorna
+        return
+    
     nome_razao_social.click()
-    time.sleep(1)
     nome_razao_social.clear()
     nome_razao_social.send_keys(lerPlanilha['Nome'][indice])
 
 def colocar_e_mail(browser, lerPlanilha, indice):
     espere = WebDriverWait(browser, 30)
     e_mail = espere.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="tomador-email"]')))
+    time.sleep(2)
+    valor_atual = e_mail.get_attribute("value")
+    if valor_atual.strip():  # Se já tiver um valor, não altera nada e retorna
+        return
+
     e_mail.click()
-    time.sleep(1)
     e_mail.clear()
     e_mail.send_keys(lerPlanilha['Email'][indice])
 
 def colocar_telefone(browser, lerPlanilha, indice):
     espere = WebDriverWait(browser, 30)
     telefone = espere.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="tomador-telefone"]')))
+
+    valor_atual = telefone.get_attribute("value")
+    if valor_atual.strip():  # Se já tiver um valor, não altera nada e retorna
+        return  
+
     telefone.click()
-    time.sleep(1)
     telefone.clear()
     telefone.send_keys('(00) 0 0000-0000')
 
 def colocar_cep(browser, lerPlanilha, indice):
     espere = WebDriverWait(browser, 30)
     cep = espere.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="cepDoEndereco"]')))
+
+    valor_atual = cep.get_attribute("value")
+    if valor_atual.strip():  # Se já tiver um valor, não altera nada e retorna
+        return  
+
     cep.click()
-    time.sleep(1)
     cep.clear()
     cep.send_keys(lerPlanilha['CEP'][indice])
     time.sleep(1.5)
@@ -132,10 +149,13 @@ def colocar_bairro(browser, lerPlanilha, indice):
 
 def colocar_numero(browser, lerPlanilha, indice):
     espere = WebDriverWait(browser, 30)
-
     numero = espere.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="numeroDoEndereco"]')))
-    numero.click()
 
+    valor_atual = numero.get_attribute("value")
+    if valor_atual.strip():  # Se já tiver um valor, não altera nada e retorna
+        return  
+
+    numero.click()
     numero.clear()
     numero.send_keys(lerPlanilha['N'][indice])
 
@@ -154,14 +174,16 @@ def dados_cliente(browser, lerPlanilha, indice):
 def tipo_atividade(browser):
     while True:
         try:
-            tipo_atividade = browser.find_element(By.XPATH, '//*[@id="s2id_lista-de-servicos-prestador"]/a/div')
-            time.sleep(1)
+            time.sleep(2)
+            tipo_atividade = browser.find_element(By.XPATH, '//*[@id="s2id_lista-de-servicos-prestador"]/a/span')
             tipo_atividade.click()
-
-
-            seleciona_tipo_atividade = browser.find_element(By.XPATH, '//*[@id="select2-drop"]/ul/li[3]/div')
             time.sleep(1)
-            seleciona_tipo_atividade.click()
+            input_tipo_atividade = browser.find_element(By.CSS_SELECTOR, '#select2-drop > div > input')
+            print('a')
+            input_tipo_atividade.send_keys('1402 - Assistência técnica.')
+            input_tipo_atividade.send_keys(Keys.ENTER)
+            # seleciona_tipo_atividade = browser.find_element(By.CSS_SELECTOR, '#select2-drop > ul > li:nth-child(3)')
+            # seleciona_tipo_atividade.click()
             break
         except:
             continue
@@ -169,11 +191,13 @@ def tipo_atividade(browser):
 def escolher_cnae(browser):
     while True:
         try:
-            cnae = browser.find_element(By.XPATH, '//*[@id="s2id_CnaeAtividade_Id"]/a/span')
+            cnae = browser.find_element(By.CSS_SELECTOR, '#s2id_CnaeAtividade_Id > a')
             cnae.click()
-
-            seleciona_cnae = browser.find_element(By.XPATH, '//*[@id="select2-drop"]/ul/li[5]/div')
-            seleciona_cnae.click()
+            time.sleep(1)
+            cnae.send_keys('9511800 - Reparação e manutenção de computadores e de equipamentos periféricos')
+            cnae.send_keys(Keys.ENTER)
+            # seleciona_cnae = browser.find_element(By.CSS_SELECTOR, '#select2-drop > ul > li.select2-results-dept-0.select2-result.select2-result-selectable.select2-highlighted')
+            # seleciona_cnae.click()
             break
         except:
             continue

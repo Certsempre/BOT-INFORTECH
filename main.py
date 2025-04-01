@@ -21,11 +21,13 @@ senha = str(login.get_senha())
 
 lerPlanilha = pd.read_excel(Formatacao().get_caminhoNotas(), Formatacao().get_sheetnameNotas())
 
+quantidade_notas = 38
+
 browser.get('https://patospb.webiss.com.br/')
 
 fazer_login(browser, cnpj, senha)
 
-for indice in range(min(18, len(lerPlanilha))):  
+for indice in range(min(quantidade_notas, len(lerPlanilha))):  
     voltar_inicio(browser)
     navegar_ate_nota(browser)
     dados_cliente(browser, lerPlanilha, indice)
