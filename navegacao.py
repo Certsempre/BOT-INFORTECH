@@ -153,7 +153,7 @@ def colocar_numero(browser, lerPlanilha, indice):
 
     valor_atual = numero.get_attribute("value")
     if valor_atual.strip():  # Se já tiver um valor, não altera nada e retorna
-        return  
+        return
 
     numero.click()
     numero.clear()

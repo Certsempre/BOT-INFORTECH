@@ -4,7 +4,7 @@ import pandas as pd
 class Formatacao:
     def __init__(self):
         self._data = datetime.date.today().strftime('%d/%m/%Y')
-        self._caminhoNotas = 'C:\\Users\\Pessoal\\Desktop\\CSempre Automacao\\BOT-INFORTECH\\Clientes Infortech TEF.xlsx'
+        self._caminhoNotas = 'C:\\Users\henri\\Desktop\\Clientes Infortech TEF.xlsx'
         self.sheetnameNotas = 'Clientes sem falha'
 
     def get_caminhoNotas(self):
