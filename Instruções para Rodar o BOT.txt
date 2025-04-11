@@ -1,0 +1,18 @@
+INSTRUÇÕES PARA EXECUTAR O BOT-INFORTECH
+
+1 - Vá até a pasta Certsempre Automacao (Área de Trabalho)
+
+2 - Dentro dela abra a pasta BOT-INFORTECH
+
+3 - Nessa etapa clique com o botão direito por fora e clique em "Abrir com Visual Studio Code"
+
+4 - Com ele aberto, vá até a pasta "desktop" e clique no arquivo app.py
+
+5 - No canto superior direito vai ter o executável (ícone de play), clique nele
+
+6 - Vai aparecer uma janela para colocar o caminho da planilha junto com a página e a quantidade de notas
+   a. Caminho: C:\Users\Pessoal\Desktop\Certsempre Automacao\BOT-INFORTECH\Clientes Infortech TEF.xlsx
+   b. Página: Clientes sem falha
+   c. Quantidade: Como estamos passando um loop for para iterar, sempre coloque a quantidade de notas desejadas - 1
+
+7 - Clique no botão "Enviar"

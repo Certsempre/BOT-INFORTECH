@@ -1,3 +1,4 @@
+import os
 import customtkinter as ctk
 import subprocess
 import sys
@@ -18,8 +19,19 @@ def executar_rpa():
     iniciar_rpa(caminho_planilha, pagina_planilha, int(qtd_notas))
 
 # Função para iniciar o script principal da RPA
+
+
+
 def iniciar_rpa(caminho, pagina, quantidade):
-    subprocess.run([sys.executable, "main.py", caminho, pagina, str(quantidade)])
+    # Obtendo o caminho absoluto do main.py que está um nível acima
+    caminho_main = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "main.py"))
+
+    # Executando o main.py com os argumentos necessários
+    subprocess.run(
+        [sys.executable, caminho_main, caminho, pagina, str(quantidade)],
+        creationflags=subprocess.CREATE_NO_WINDOW  # Evita abrir um console extra
+    )
+
 
 #_________Configuração da Interface_________
 ctk.set_appearance_mode('dark')

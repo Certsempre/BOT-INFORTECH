@@ -1,4 +1,5 @@
 from selenium import webdriver
+import sys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -8,7 +9,12 @@ import time
 from Formatacao import Formatacao
 import pandas as pd
 
-lerPlanilha = pd.read_excel(Formatacao().get_caminhoNotas(), Formatacao().get_sheetnameNotas())
+
+caminho_planilha = sys.argv[1]
+pagina_planilha = sys.argv[2]
+quantidade_notas = int(sys.argv[3])
+
+lerPlanilha = pd.read_excel(caminho_planilha, pagina_planilha)
 
 lerPlanilha['Nome'] = lerPlanilha['Nome'].astype(str)
 lerPlanilha['CNPJ'] = lerPlanilha['CNPJ'].astype(str)
